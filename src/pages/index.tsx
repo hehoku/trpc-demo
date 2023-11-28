@@ -25,18 +25,13 @@ const IndexPage: NextPageWithLayout = () => {
     },
   });
 
-  // prefetch all posts for instant navigation
-  // useEffect(() => {
-  //   const allPosts = postsQuery.data?.pages.flatMap((page) => page.items) ?? [];
-  //   for (const { id } of allPosts) {
-  //     void utils.post.byId.prefetch({ id });
-  //   }
-  // }, [postsQuery.data, utils]);
+  const helloTrpc = trpc.hello.useQuery({ text: 'from Hehoku' });
 
   return (
     <div className="flex flex-col bg-gray-800 py-8">
       <h1 className="text-4xl font-bold">
         Welcome to your tRPC with Prisma starter!
+        {helloTrpc.data && <p>{helloTrpc.data.greeting}</p>}
       </h1>
       <p className="text-gray-400">
         If you get stuck, check{' '}
@@ -160,29 +155,3 @@ const IndexPage: NextPageWithLayout = () => {
 };
 
 export default IndexPage;
-
-/**
- * If you want to statically render this page
- * - Export `appRouter` & `createContext` from [trpc].ts
- * - Make the `opts` object optional on `createContext()`
- *
- * @link https://trpc.io/docs/ssg
- */
-// export const getStaticProps = async (
-//   context: GetStaticPropsContext<{ filter: string }>,
-// ) => {
-//   const ssg = createServerSideHelpers({
-//     router: appRouter,
-//     ctx: await createContext(),
-//   });
-//
-//   await ssg.post.all.fetch();
-//
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       filter: context.params?.filter ?? 'all',
-//     },
-//     revalidate: 1,
-//   };
-// };

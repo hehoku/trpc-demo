@@ -11,7 +11,7 @@ export const appRouter = router({
     )
     .query((opts) => {
       return {
-        greeting: `hello ${opts.input.text} from trpc!!`,
+        greeting: `Hello ${opts.input.text}!`,
       };
     }),
 
